@@ -1,5 +1,7 @@
-import json
 from constants import ALPHABET
+
+import json
+
 
 def read_file(file_path: str) -> str:
     """
@@ -17,6 +19,7 @@ def read_file(file_path: str) -> str:
     except Exception as e:
         raise e
 
+
 def write_file(file_path: str, file_content: str) -> None:
     """
     Write to file.
@@ -31,6 +34,7 @@ def write_file(file_path: str, file_content: str) -> None:
             file.write(file_content)
     except Exception as e:
         raise e
+
 
 def read_json(file_path: str) -> dict:
     """
@@ -48,6 +52,7 @@ def read_json(file_path: str) -> dict:
     except Exception as e:
         raise e
     
+    
 def write_json(file_path: str, file_content: dict) -> None:
     """
     Write a dictionary to a JSON file.
@@ -63,6 +68,7 @@ def write_json(file_path: str, file_content: dict) -> None:
     except Exception as e:
         raise e
     
+    
 def caesar_encryption(file_text: str, file_key: str) -> str:
     """
     Encrypt text using the Caesar cipher.
@@ -75,6 +81,7 @@ def caesar_encryption(file_text: str, file_key: str) -> str:
     key = read_json(file_key)
     text = read_file(file_text).upper()
     encrypted_result = ''
+    
     for char in text:
             if char in ALPHABET:
                 encrypted_result += key[char]
@@ -85,21 +92,44 @@ def caesar_encryption(file_text: str, file_key: str) -> str:
     
 def frequency_analysis(file_text: str) -> dict:
     """
-    Perform frequency analysis on the text.
+    Perform sorted frequency analysis on the text.
     Args:
     - file_text (str): The text to be analyzed.
     Returns:
-    - dict: A dictionary with the frequency.
+    - dict: A dictionary with the sorted frequency.
     """
     frequency = {}
     text = read_file(file_text)
     counter = 0
+    
     for char in text:
         if char in frequency:
             frequency[char] += 1
         else:
-            frequency[char] = 1
+            frequency[char] = 1    
         counter += 1
+    
     for char in frequency:
         frequency[char] /= counter
-    return frequency
+    
+    sorted_frequency = dict(sorted(frequency.items(), key=lambda item: 
+        item[1], reverse = True))
+    return sorted_frequency
+    
+    
+def frequency_decryption(file_text: str, file_key: str) -> str:
+    """
+    Decrypt the text
+    Args:
+    - file_text (str): The text to be decrypted.
+    - file_key (key): The key value for the frequency.
+    Return: 
+    - str: The decrypted text.
+    """
+    decryption_result = ' '
+    text = read_file(file_text)
+    key = read_json(file_key)
+    
+    for char in text:    
+        decryption_result += key[char]
+    return decryption_result

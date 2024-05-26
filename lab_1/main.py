@@ -1,13 +1,30 @@
-import json
-from functions import read_file, write_file, read_json, caesar_encryption, frequency_analysis, write_json
-from constants import ALPHABET, FREQUENCY_ANALYSIS
-from paths import encryption_key, decryption_key, encryption_input, decryption_input, encryption_output, decryption_output
+from functions import (
+    write_file, 
+    caesar_encryption, 
+    frequency_analysis, 
+    write_json, 
+    frequency_decryption)
+
+from paths import (
+    encryption_key, 
+    decryption_key, 
+    encryption_input, 
+    decryption_input, 
+    encryption_output,
+    decryption_output, 
+    decryption_frequency)
 
 
 def main():
     encrypted_text = caesar_encryption(encryption_input, encryption_key)
     write_file(encryption_output, encrypted_text)
-    decrypted_key = frequency_analysis(decryption_input)
-    write_json(decryption_key, decrypted_key)
+    
+    frequency = frequency_analysis(decryption_input)
+    write_json(decryption_frequency, frequency)
+    
+    decryption_text = frequency_decryption(decryption_input, decryption_key)
+    write_file(decryption_output, decryption_text)
+
+
 if __name__ == "__main__":
     main()
