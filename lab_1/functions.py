@@ -48,6 +48,21 @@ def read_json(file_path: str) -> dict:
     except Exception as e:
         raise e
     
+def write_json(file_path: str, file_content: dict) -> None:
+    """
+    Write a dictionary to a JSON file.
+    Args:
+    - file_path (str): The path to the file to be written.
+    - file_content (dict): The dictionary to write to the file.
+    Returns:
+    - None
+    """
+    try:
+        with open(file_path, 'w', encoding='utf-8') as file:
+            json.dump(file_content, file, indent=4, ensure_ascii=False)
+    except Exception as e:
+        raise e
+    
 def caesar_encryption(file_text: str, file_key: str) -> str:
     """
     Encrypt text using the Caesar cipher.
@@ -58,7 +73,7 @@ def caesar_encryption(file_text: str, file_key: str) -> str:
     - str: The encrypted text.
     """
     key = read_json(file_key)
-    text = read_file(file_text)
+    text = read_file(file_text).upper()
     encrypted_result = ''
     for char in text:
             if char in ALPHABET:
@@ -68,3 +83,23 @@ def caesar_encryption(file_text: str, file_key: str) -> str:
     return encrypted_result
 
     
+def frequency_analysis(file_text: str) -> dict:
+    """
+    Perform frequency analysis on the text.
+    Args:
+    - file_text (str): The text to be analyzed.
+    Returns:
+    - dict: A dictionary with the frequency.
+    """
+    frequency = {}
+    text = read_file(file_text)
+    counter = 0
+    for char in text:
+        if char in frequency:
+            frequency[char] += 1
+        else:
+            frequency[char] = 1
+        counter += 1
+    for char in frequency:
+        frequency[char] /= counter
+    return frequency
