@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "java_generator",
+      "request": "launch",
+      "mainClass": "lab_2.java_generator",
+      "projectName": "isb_fd384ffe"
+    },
+    {
+      "type": "java",
       "name": "Main",
       "request": "launch",
       "mainClass": "lab_2.Main",

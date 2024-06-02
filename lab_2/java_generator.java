@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.math.BigInteger;
 
-public class Main {
+public class java_generator {
     public static void main(String[] args) {
         final int sequence_length = 128;
         Random random = new Random();
@@ -13,7 +13,5 @@ public class Main {
         }
 
         System.out.println("Generated 128-bit binary sequence: " + bit_sequence .toString());
-
-        BigInteger bigInt = new BigInteger(bit_sequence .toString(), 2);
     }
 }
