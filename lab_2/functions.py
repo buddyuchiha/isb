@@ -1,5 +1,4 @@
 import json
-
 import math
 
 from scipy.special import erfc, gammainc
@@ -32,23 +31,19 @@ def frequency_test(sequence: str) -> float:
     """
     try:
         sequence_length = len(sequence)
-        sum_value = 0
+        count_ones = sequence.count('1')
+        count_zeros = sequence.count('0')
         
-        for bit in sequence:
-            if bit == '1':
-                sum_value += 1
-            elif bit == '0':
-                sum_value -= 1
-            else:
-                raise ValueError("The sequence contains non-binary values.")
-        
+        if count_ones + count_zeros != sequence_length:
+            raise ValueError("The sequence contains non-binary values.")
+
+        sum_value = count_ones - count_zeros
         observed_statistic = abs(sum_value) / math.sqrt(sequence_length)
         p_value = erfc(observed_statistic / math.sqrt(2))
         return p_value
     except Exception as e:
         print(f"Error in frequency_test: {e}")
         raise e
-
 
 def runs_test(sequence: str) -> float:
     """
@@ -122,14 +117,15 @@ def longest_run_test(sequence: str, block_size: int = 128) -> float:
 
     v = [0] * 4
     for run in longest_runs:
-        if run <= 10:
-            v[0] += 1
-        elif run == 11:
-            v[1] += 1
-        elif run == 12:
-            v[2] += 1
-        else:  
-            v[3] += 1
+        match run:
+            case 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10:
+                v[0] += 1
+            case 11:
+                v[1] += 1
+            case 12:
+                v[2] += 1
+            case _:
+                v[3] += 1
 
     PI = {1: 0.2148, 2: 0.3672, 3: 0.2305, 4: 0.1875}
     expected_counts = [num_blocks * PI[i] for i in range(1, 5)]
