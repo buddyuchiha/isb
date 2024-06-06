@@ -94,13 +94,12 @@ def longest_run_of_ones_in_block(block) -> int:
 
     return max_run
 
-
-def longest_run_test(sequence: str, block_size: int = 128) -> float:
+def longest_run_test(sequence: str, block_size: int = 8) -> float:
     """
     Perform the Longest Run of Ones in a Block Test.
     Args:
     - sequence (str): Binary sequence to be tested.
-    - block_size (int): Size of each block (default is 128).
+    - block_size (int): Size of each block (default is 8).
     Returns:
     - float: P-value of the test.
     """
@@ -118,20 +117,20 @@ def longest_run_test(sequence: str, block_size: int = 128) -> float:
     v = [0] * 4
     for run in longest_runs:
         match run:
-            case 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10:
+            case 0 | 1:
                 v[0] += 1
-            case 11:
+            case 2:
                 v[1] += 1
-            case 12:
+            case 3:
                 v[2] += 1
             case _:
                 v[3] += 1
 
-    PI = {1: 0.2148, 2: 0.3672, 3: 0.2305, 4: 0.1875}
-    expected_counts = [num_blocks * PI[i] for i in range(1, 5)]
+    PI = [0.2148, 0.3672, 0.2305, 0.1875]
+    expected_counts = [num_blocks * PI[i] for i in range(4)]
 
-    chi_square = sum((observed - expected) ** 2 / expected for observed, 
+    chi_square = sum((observed - expected) ** 2 / expected for observed,
                      expected in zip(v, expected_counts))
-    p_val = gammainc(2.5, chi_square / 2.0)  
+    p_val = gammainc(2.5, chi_square / 2.0)
 
     return p_val
