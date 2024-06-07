@@ -5,11 +5,11 @@ from functions import (
     longest_run_test
 )
 
-from paths import sequences_path
+from paths import SEQUENCES_PATH
 
 
 def main():
-    sequences = read_json(sequences_path)
+    sequences = read_json(SEQUENCES_PATH)
 
     for key, sequence in sequences.items():
         print(f"Results for {key}:")

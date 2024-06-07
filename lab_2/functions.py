@@ -3,6 +3,8 @@ import math
 
 from scipy.special import erfc, gammainc
 
+from constants import PI
+
 
 def read_json(file_path: str) -> dict:
     """
@@ -19,8 +21,8 @@ def read_json(file_path: str) -> dict:
         raise FileNotFoundError(f"The file {file_path} does not exist") from e
     except Exception as e:
         raise e
-   
-    
+
+
 def frequency_test(sequence: str) -> float:
     """
     Perform the Frequency (Monobit) Test.
@@ -33,7 +35,7 @@ def frequency_test(sequence: str) -> float:
         sequence_length = len(sequence)
         count_ones = sequence.count('1')
         count_zeros = sequence.count('0')
-        
+
         if count_ones + count_zeros != sequence_length:
             raise ValueError("The sequence contains non-binary values.")
 
@@ -44,6 +46,7 @@ def frequency_test(sequence: str) -> float:
     except Exception as e:
         print(f"Error in frequency_test: {e}")
         raise e
+
 
 def runs_test(sequence: str) -> float:
     """
@@ -56,21 +59,21 @@ def runs_test(sequence: str) -> float:
     try:
         sequence_length = len(sequence)
         pi = sequence.count('1') / sequence_length
-        
+
         if abs(pi - 0.5) > (2 / math.sqrt(sequence_length)):
             return 0.0
 
         num_runs = 1
         for i in range(1, sequence_length):
-            if sequence[i] != sequence[i - 1]:
+            if sequence[i] == sequence[i - 1]:
                 num_runs += 1
-        
-        p_value = erfc(abs(num_runs - 2 * sequence_length * pi * (1 - pi)) /
+
+        p_value = erfc((math.fabs(num_runs - 2 * sequence_length * pi * (1 - pi))) /
                        (2 * math.sqrt(2 * sequence_length) * pi * (1 - pi)))
         return p_value
     except Exception as e:
         print(f"Error in runs_test: {e}")
-        raise e 
+        raise e
 
 
 def longest_run_of_ones_in_block(block) -> int:
@@ -93,6 +96,7 @@ def longest_run_of_ones_in_block(block) -> int:
             current_run = 0
 
     return max_run
+
 
 def longest_run_test(sequence: str, block_size: int = 8) -> float:
     """
@@ -126,11 +130,10 @@ def longest_run_test(sequence: str, block_size: int = 8) -> float:
             case _:
                 v[3] += 1
 
-    PI = [0.2148, 0.3672, 0.2305, 0.1875]
     expected_counts = [num_blocks * PI[i] for i in range(4)]
 
     chi_square = sum((observed - expected) ** 2 / expected for observed,
-                     expected in zip(v, expected_counts))
-    p_val = gammainc(2.5, chi_square / 2.0)
+    expected in zip(v, expected_counts))
+    p_val = gammainc(3 / 2, chi_square / 2)
 
     return p_val

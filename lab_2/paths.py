@@ -1,1 +1,1 @@
-sequences_path = 'lab_2/sequences.json'
+SEQUENCES_PATH = 'lab_2/sequences.json'
