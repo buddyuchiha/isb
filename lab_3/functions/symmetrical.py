@@ -13,18 +13,6 @@ class SymmetricEncryption:
         """
         return os.urandom(32)  
 
-    @staticmethod
-    def serialize_nonce(nonce: bytes, path: str):
-        """
-        Serialize the nonce to a file.
-        Args:
-        - nonce (bytes): Nonce to be serialized.
-        - path (str): File path to save the nonce.
-        Returns:
-        - None.
-        """
-        with open(path, 'wb') as file:
-            file.write(nonce)
 
     @staticmethod
     def encrypt_text(symmetric_key: bytes, text: bytes) -> bytes:

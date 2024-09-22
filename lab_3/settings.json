@@ -1,3 +1,8 @@
 {
-    "input_text2" : "lab_3/texts/input_text.txt"
+    "input_text" : "lab_3/texts/input_text.txt",
+    "output_text" : "lab_3/texts/output_text.txt", 
+    "key" : "lab_3/keys/key.txt",
+    "public_key" : "lab_3/keys/public_key.pem",
+    "private_key" : "lab_3/keys/private_key.pem",
+    "decrypt_text" : "lab_3/texts/decrypt_text.txt"
 }
