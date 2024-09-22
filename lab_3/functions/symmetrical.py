@@ -4,7 +4,8 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms
 
 
 class SymmetricEncryption:
-    def generate_key(self) -> bytes:
+    @staticmethod
+    def generate_key() -> bytes:
         """
         Generate a random symmetric key for ChaCha20.
         Returns:
@@ -12,8 +13,8 @@ class SymmetricEncryption:
         """
         return os.urandom(32)  
 
-
-    def serialize_nonce(self, nonce: bytes, path: str):
+    @staticmethod
+    def serialize_nonce(nonce: bytes, path: str):
         """
         Serialize the nonce to a file.
         Args:
@@ -25,8 +26,8 @@ class SymmetricEncryption:
         with open(path, 'wb') as file:
             file.write(nonce)
 
-
-    def encrypt_text(self, symmetric_key: bytes, text: bytes) -> bytes:
+    @staticmethod
+    def encrypt_text(symmetric_key: bytes, text: bytes) -> bytes:
         """
         Encrypt the text using the provided symmetric key and 16-byte nonce.
         Args:
@@ -35,14 +36,15 @@ class SymmetricEncryption:
         Returns:
         - bytes: Encrypted text, prepended by the 16-byte nonce.
         """
+        text = bytes(text, 'UTF-8')
         nonce = os.urandom(16)  
-        cipher = Cipher(algorithms.ChaCha20(symmetric_key, nonce[:12]), mode=None) 
+        cipher = Cipher(algorithms.ChaCha20(symmetric_key, nonce[:16]), mode=None) 
         encryptor = cipher.encryptor()
         encrypted_text = encryptor.update(text)
         return nonce + encrypted_text  
 
-
-    def decrypt_text(self, symmetric_key: bytes, encrypted_text: bytes) -> bytes:
+    @staticmethod
+    def decrypt_text(symmetric_key: bytes, encrypted_text: bytes) -> bytes:
         """
         Decrypt the text using the provided symmetric key and 16-byte nonce.
         Args:
