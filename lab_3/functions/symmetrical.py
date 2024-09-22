@@ -4,6 +4,10 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms
 
 
 class SymmetricEncryption:
+    """
+    Class for working with text by using Symetric Encryption.
+    """
+    
     @staticmethod
     def generate_key() -> bytes:
         """
@@ -12,7 +16,6 @@ class SymmetricEncryption:
         - bytes: A randomly generated symmetric key.
         """
         return os.urandom(32)  
-
 
     @staticmethod
     def encrypt_text(symmetric_key: bytes, text: bytes) -> bytes:

@@ -2,6 +2,10 @@ from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import serialization, hashes
 
 class AsymmetricEncryption:
+    """
+    Class for working with key by using Asymetric Encryption.
+    """
+    
     @staticmethod
     def generate_keys() -> tuple:
         """

@@ -1,11 +1,12 @@
-from functions.file import *
-from functions.symmetrical import *
+from functions.file_working import *
+from functions.symmetrical import SymmetricEncryption
 from functions.asymmetrical import *
 
 
 settings = read_json("lab_3/settings.json")
 s = read_file(settings["input_text"])
 print(s)
+
 
 
 key = SymmetricEncryption.generate_key()
