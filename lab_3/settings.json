@@ -5,5 +5,5 @@
     "symmetrical_key" : "lab_3/keys/symmetrical_key.txt",
     "symmetrical_nonce" : "lab_3/keys/symmetrical_nonce.txt",
     "public_key" : "lab_3/keys/public_key.pem",
-    "private_key" : "lab_3/keys/private_key.pem",
+    "private_key" : "lab_3/keys/private_key.pem"
 }

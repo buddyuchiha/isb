@@ -2,7 +2,6 @@ import json
 
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.hazmat.primitives.serialization import load_pem_public_key, load_pem_private_key
 
 
 class FileWorking:
@@ -22,24 +21,6 @@ class FileWorking:
         try:
             with open(file_path, 'r', encoding='utf-8') as file:
                 return file.read()
-        except FileNotFoundError as e:
-            raise FileNotFoundError(f"The file {file_path} does not exist") from e
-        except Exception as e:
-            raise e
-
-    @staticmethod
-    def write_file(file_path: str, file_content: str) -> None:
-        """
-        Write to file.
-        Args:
-        - file_path (str): The path to the file to be written.
-        - file_content (str): The content to write to the file.
-        Returns:
-        - None
-        """
-        try:
-            with open(file_path, 'w', encoding='utf-8') as file:
-                file.write(file_content)
         except FileNotFoundError as e:
             raise FileNotFoundError(f"The file {file_path} does not exist") from e
         except Exception as e:
@@ -186,7 +167,7 @@ class FileWorking:
             raise e
         
     @staticmethod
-    def serialization_nonce(file_path: str, file_nonce: bytes) -> None:
+    def serialization_nonce(file_path: str, file_text: bytes, file_nonce: bytes) -> None:
         """
         Serialize the nonce to a file.
         Args:
@@ -196,6 +177,7 @@ class FileWorking:
         - None.
         """
         try:
+            file_nonce = file_text[:16]  
             FileWorking.write_bytes_file(file_path, file_nonce)
         except FileNotFoundError as e:
             raise FileNotFoundError(f"The file {file_path} does not exist") from e
